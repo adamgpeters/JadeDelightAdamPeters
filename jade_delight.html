@@ -1,205 +1,214 @@
-	<!DOCTYPE html
-		PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Jade Delight</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
-	</head>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Jade Delight</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+		integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+		crossorigin="anonymous"></script>
+</head>
 
-	<body>
-		<script language="javascript">
+<body>
+	<script language="javascript">
 
-			function MenuItem(name, cost) {
-				this.name = name;
-				this.cost = cost;
-			}
+		function MenuItem(name, cost) {
+			this.name = name;
+			this.cost = cost;
+		}
 
-			menuItems = new Array(
-				new MenuItem("Chicken Chop Suey", 4.5),
-				new MenuItem("Sweet and Sour Pork", 6.25),
-				new MenuItem("Shrimp Lo Mein", 5.25),
-				new MenuItem("Moo Shi Chicken", 6.5),
-				new MenuItem("Fried Rice", 2.35)
-			);
+		menuItems = new Array(
+			new MenuItem("Chicken Chop Suey", 4.5),
+			new MenuItem("Sweet and Sour Pork", 6.25),
+			new MenuItem("Shrimp Lo Mein", 5.25),
+			new MenuItem("Moo Shi Chicken", 6.5),
+			new MenuItem("Fried Rice", 2.35)
+		);
 
-			function makeSelect(name, minRange, maxRange) {
-				var t = "";
-				t = "<select name='" + name + "' size='1'>";
-				for (j = minRange; j <= maxRange; j++)
-					t += "<option>" + j + "</option>";
-				t += "</select>";
-				return t;
-			}
-		</script>
+		function makeSelect(name, minRange, maxRange) {
+			var t = "";
+			t = "<select name='" + name + "' size='1'>";
+			for (j = minRange; j <= maxRange; j++)
+				t += "<option>" + j + "</option>";
+			t += "</select>";
+			return t;
+		}
+	</script>
 
-		<h1>Jade Delight</h1>
-		<form>
+	<h1>Jade Delight</h1>
+	<form>
 
-			<p>First Name: <input type="text" name='fname' /></p>
-			<p>Last Name*: <input type="text" name='lname' /></p>
-			<p>Street: <input type="text" name='street' /></p>
-			<p>City: <input type="text" name='city' /></p>
-			<p>Phone*: <input type="text" name='phone' /></p>
-			<p>
-				<input type="radio" name="p_or_d" value="pickup" checked="checked" />Pickup
-				<input type="radio" name='p_or_d' value='delivery' />
-				Delivery
-			</p>
-			<table border="0" cellpadding="3">
-				<tr>
-					<th>Select Item</th>
-					<th>Item Name</th>
-					<th>Cost Each</th>
-					<th>Total Cost</th>
-				</tr>
-				<script language="javascript">
+		<p>First Name: <input type="text" name='fname' /></p>
+		<p>Last Name*: <input type="text" name='lname' /></p>
+		<p>Street: <input type="text" name='street' /></p>
+		<p>City: <input type="text" name='city' /></p>
+		<p>Phone*: <input type="text" name='phone' /></p>
+		<p>
+			<input type="radio" name="p_or_d" value="pickup" checked="checked" />Pickup
+			<input type="radio" name='p_or_d' value='delivery' />
+			Delivery
+		</p>
+		<table border="0" cellpadding="3">
+			<tr>
+				<th>Select Item</th>
+				<th>Item Name</th>
+				<th>Cost Each</th>
+				<th>Total Cost</th>
+			</tr>
+			<script language="javascript">
 
-					var s = "";
-					for (i = 0; i < menuItems.length; i++) {
-						s += "<tr><td>";
-						s += makeSelect("quan" + i, 0, 10);
-						s += "</td><td>" + menuItems[i].name + "</td>";
-						s += "<td> $ " + menuItems[i].cost.toFixed(2) + "</td>";
-						s += "<td>$<input type='text' name='cost'/></td></tr>";
-					}
-					document.writeln(s);
-				</script>
-			</table>
-			<p>Subtotal:
-				$<input type="text" name='subtotal' id="subtotal" />
-			</p>
-			<p>Mass tax 6.25%:
-				$ <input type="text" name='tax' id="tax" />
-			</p>
-			<p>Total: $ <input type="text" name='total' id="total" />
-			</p>
-
-			<input type="submit" value="Submit Order" />
-
-
-
-		</form>
-		<script>
-
-			function fillInBoxes() {
-				let subtotal = 0;
-				$("input[name ='cost']").each(function (i) {
-					let sel = $("select[name='quan" + i + "']");
-					if (sel.val() == 0) {
-						$(this).val('');
-					} else {
-						let entryCost = sel.val() * menuItems[i].cost;
-						$(this).val('' + entryCost.toFixed(2));
-						subtotal = subtotal + entryCost;
-					}
-				});
-				if (subtotal == 0) {
-					$("#subtotal").val('');
-					$("#tax").val('');
-					$("#total").val('');
+				var s = "";
+				for (i = 0; i < menuItems.length; i++) {
+					s += "<tr><td>";
+					s += makeSelect("quan" + i, 0, 10);
+					s += "</td><td>" + menuItems[i].name + "</td>";
+					s += "<td> $ " + menuItems[i].cost.toFixed(2) + "</td>";
+					s += "<td>$<input type='text' name='cost'/></td></tr>";
 				}
-				else {
-					$("#subtotal").val('' + subtotal.toFixed(2));
-					let tax = (subtotal * .0625);
-					$("#tax").val('' + tax.toFixed(2));
-					$("#total").val('' + (subtotal + tax).toFixed(2));
-				}
-			}
+				document.writeln(s);
+			</script>
+		</table>
+		<p>Subtotal:
+			$<input type="text" name='subtotal' id="subtotal" />
+		</p>
+		<p>Mass tax 6.25%:
+			$ <input type="text" name='tax' id="tax" />
+		</p>
+		<p>Total: $ <input type="text" name='total' id="total" />
+		</p>
 
-			for (let i = 0; i < menuItems.length; i++) {
-				$("select[name='quan" + i + "']").change(() => {
-					fillInBoxes();
-				});
-			}
-		</script>
+		<input type="submit" value="Submit Order" />
 
-		<script>
 
-			$(document).ready(function() {
-				$("input[name='city']").parent().hide();
-				$("input[name='street']").parent().hide();
-			})
 
-			$("input[value='pickup']").click(function() {
-				$("input[name='city']").parent().hide();
-				$("input[name='street']").parent().hide();
-			});
-			$("input[value='delivery']").click(function() {
-				$("input[name='city']").parent().show();
-				$("input[name='street']").parent().show();
-			});
+	</form>
+	<script>
 
-		</script>
-
-		<script>
-
-			function isValidPhone(st) {
-				if (st.length != 9 && st.length != 10) return false;
-				for(let i = 0; i < st.length; i++) {
-					if (isNaN(st[i])) return false;
-				}
-				return true;
-			}
-
-			function displayAlert(arr) {
-				let message = "You must enter a ";
-				if (arr.length == 1) {
-					message += arr[0] + ".";
-				} else if (arr.length == 2) {
-					message += arr[0] + " and " + arr[1] + "."
-				}
-				else {
-					for(let i = 0; i < arr.length; i ++) {
-						if (i == arr.length - 1) {
-							message += " and " + arr[i] + ".";
-						} else {
-							message += arr[i] + ", ";
-						}
-					}
-				}
-				alert(message);
-			}
-
-			function displayOrder() {
-				if ($("#total").val().length == 0) {
-					alert("Place an order before submitting!")
-				}
-				let alertMessage = "Thank you for you order!\nTotal: " + $("#total").val() + "\n";
-				alertMessage += "Your order will be " + 
-				($("input[value='delivery']").is(':checked') ? 
-					"delivered at " + moment(new Date()).add(30, 'm').format("LT") + "." : 
-					"ready for pickup at " + moment(new Date()).add(15, 'm').format("LT") + ".");
-				alert(alertMessage);
-			}
-
-			$("input[value='Submit Order']").click(function() {
-				let alertMessage = [];
-				if ($("input[name='lname']").val().length == 0)
-					alertMessage.push("last name")
-				if (!isValidPhone($("input[name='phone']").val()))
-					alertMessage.push("valid phone number");
-				if ($("input[value='delivery']").is(':checked')) {
-					if ($("input[name='street']").val().length == 0)
-						alertMessage.push("street address");
-					if ($("input[name='city']").val().length == 0) {
-						alertMessage.push("city");
-					}
-				} 
-				if (alertMessage.length == 0) {
-					displayOrder();
+		function fillInBoxes() {
+			subtotal = 0;
+			$("input[name ='cost']").each(function (i) {
+				let sel = $("select[name='quan" + i + "']");
+				if (sel.val() == 0) {
+					$(this).val('');
 				} else {
-					displayAlert(alertMessage);
+					let entryCost = sel.val() * menuItems[i].cost;
+					$(this).val('' + entryCost.toFixed(2));
+					subtotal = subtotal + entryCost;
 				}
 			});
-		</script>
+			if (subtotal == 0) {
+				$("#subtotal").val('');
+				$("#tax").val('');
+				$("#total").val('');
+			}
+			else {
+				$("#subtotal").val('' + subtotal.toFixed(2));
+				tax = (subtotal * .0625);
+				$("#tax").val('' + tax.toFixed(2));
+				total = subtotal + tax;
+				$("#total").val('' + (total).toFixed(2));
+			}
+		}
 
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-			crossorigin="anonymous"></script>
+		for (let i = 0; i < menuItems.length; i++) {
+			$("select[name='quan" + i + "']").change(() => {
+				fillInBoxes();
+			});
+		}
+	</script>
 
-	</body>
+	<script>
 
-	</html>
+		$(document).ready(function () {
+			$("input[name='city']").parent().hide();
+			$("input[name='street']").parent().hide();
+		})
+
+		$("input[value='pickup']").click(function () {
+			$("input[name='city']").parent().hide();
+			$("input[name='street']").parent().hide();
+		});
+		$("input[value='delivery']").click(function () {
+			$("input[name='city']").parent().show();
+			$("input[name='street']").parent().show();
+		});
+
+	</script>
+
+	<script>
+
+		function isValidPhone(st) {
+			if (st.length != 9 && st.length != 10) return false;
+			for (let i = 0; i < st.length; i++) {
+				if (isNaN(st[i])) return false;
+			}
+			return true;
+		}
+
+		function displayAlert(arr) {
+			let message = "You must enter a ";
+			if (arr.length == 1) {
+				message += arr[0] + ".";
+			} else if (arr.length == 2) {
+				message += arr[0] + " and " + arr[1] + "."
+			}
+			else {
+				for (let i = 0; i < arr.length; i++) {
+					if (i == arr.length - 1) {
+						message += " and " + arr[i] + ".";
+					} else {
+						message += arr[i] + ", ";
+					}
+				}
+			}
+			alert(message);
+		}
+
+		function displayOrder() {
+			if ($("#total").val().length == 0) {
+				alert("Place an order before submitting!")
+			}
+			let alertMessage = "Thank you for you order!\nTotal: " + $("#total").val() + "\n";
+			alertMessage += "Your order will be " +
+				($("input[value='delivery']").is(':checked') ?
+					"delivered at " + (time = moment(new Date()).add(30, 'm').format("LT")) + "." :
+					"ready for pickup at " + (time = moment(new Date()).add(15, 'm').format("LT")) + ".");
+			alert(alertMessage);
+		}
+
+		function openPHP() {
+			window.open("jade_delight.php");
+			$.post( "jade_delight.php", { subtotal: subtotal, tax: tax, total: total, time: time });
+		}
+
+		$("input[value='Submit Order']").click(function () {
+			let alertMessage = [];
+			if ($("input[name='lname']").val().length == 0)
+				alertMessage.push("last name")
+			if (!isValidPhone($("input[name='phone']").val()))
+				alertMessage.push("valid phone number");
+			if ($("input[value='delivery']").is(':checked')) {
+				if ($("input[name='street']").val().length == 0)
+					alertMessage.push("street address");
+				if ($("input[name='city']").val().length == 0) {
+					alertMessage.push("city");
+				}
+			}
+			if (alertMessage.length == 0) {
+				displayOrder();
+				openPHP();
+			} else {
+				displayAlert(alertMessage);
+			}
+		});
+	</script>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+
+</body>
+
+</html>
