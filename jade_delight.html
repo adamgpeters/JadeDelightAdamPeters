@@ -179,8 +179,15 @@
 		}
 
 		function openPHP() {
-			window.open("jade_delight.php", '_blank',);
-			$.post( "jade_delight.php", { subtotal: subtotal, tax: tax, total: total, time: time });
+
+			$.ajax({
+			type: "GET",
+			url: "jade_delight.php"
+			}).done(function( data) {
+				$.post( "jade_delight.php", { subtotal: subtotal, tax: tax, total: total, time: time });
+			});
+
+			// window.open("jade_delight.php", '_blank',);
 		}
 
 		$("input[value='Submit Order']").click(function () {
